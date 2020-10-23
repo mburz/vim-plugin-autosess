@@ -52,10 +52,10 @@ function AutosessUpdate()
 	if !isdirectory(expand(g:autosess_dir))
 		call mkdir(expand(g:autosess_dir), 'p', 0700)
 	endif
-	if bufnr('$') > 1 || tabpagenr('$') > 1 || (s:WinNr() > 1 && !&diff)
-		execute 'mksession! ' . fnameescape(v:this_session)
-	elseif winnr('$') == 1 && line('$') == 1 && col('$') == 1
+	if @% == '' && bufnr('$') == 1 && tabpagenr('$') == 1 && winnr('$') == 1 && line('$') == 1 && col('$') == 1
 		call delete(v:this_session)
+	elseif bufnr('$') > 1 || tabpagenr('$') > 1 || (s:WinNr() > 1 && !&diff)
+		execute 'mksession! ' . fnameescape(v:this_session)
 	endif
 endfunction
 
