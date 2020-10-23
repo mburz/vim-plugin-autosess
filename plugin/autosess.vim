@@ -16,8 +16,9 @@ if !exists('g:autosess_dir')
 endif
 let s:session_file  = substitute(getcwd(), '[:\\/]', '%', 'g').'.vim'
 
+autocmd StdinReadPre * let g:is_stdin = 1
 autocmd VimEnter *		if v:this_session == '' | let v:this_session = expand(g:autosess_dir).'/'.s:session_file | endif
-autocmd VimEnter * nested	if !argc()  | call AutosessRestore() | endif
+autocmd VimEnter * nested	if !argc() && !exists("g:is_stdin") | call AutosessRestore() | endif
 autocmd VimLeave *		if !v:dying | call AutosessUpdate()  | endif
 
 
